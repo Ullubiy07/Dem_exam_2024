@@ -81,7 +81,6 @@ class MainWindow(QMainWindow):
         self.button_join.setStyleSheet('Background-color: rgb(187, 187, 187)')
         self.button_join.clicked.connect(self.checking_exist_data)
 
-
     def checking_exist_data(self):
         import os.path
         if os.path.exists('data.csv'):

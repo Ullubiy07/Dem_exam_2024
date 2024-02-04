@@ -21,7 +21,12 @@ class UsersWindow(QtWidgets.QDialog):
             try:
                 func(self)
             except Exception as error:
-                print(error)
+                self.error_join = QMessageBox()
+                self.error_join.setWindowTitle('Ошибка')
+                self.error_join.setText(f'Поместите файл data.csv в папку с .exe файлом или проектом \n {error}')
+                self.error_join.setIcon(QMessageBox.Information)
+                self.error_join.setStandardButtons(QMessageBox.Ok)
+                self.error_join.exec_()
         return inner
 
 
@@ -62,7 +67,7 @@ class UsersWindow(QtWidgets.QDialog):
         self.table.horizontalHeaderItem(1).setFont(QtGui.QFont('Arial', 15))
         self.table.horizontalHeaderItem(2).setFont(QtGui.QFont('Arial', 15))
 
-
+    @checking
     def full_table(self):
         with open('data.csv', 'r', encoding='utf-8') as file:
             file_reader = csv.reader(file)
@@ -108,6 +113,7 @@ class UsersWindow(QtWidgets.QDialog):
             self.table.removeRow(self.selected_row)
             self.remove_from_data()
 
+    @checking
     def remove_from_data(self):
         data_save = []
         with open('data.csv', 'r', encoding='utf-8') as file:
